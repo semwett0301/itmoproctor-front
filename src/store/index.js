@@ -1,7 +1,8 @@
 import {createStore} from "vuex";
+import {user_info} from "@/store/modules/user-info";
 
 export default createStore({
-        modules: {
-
+    modules: {
+        user: user_info
     }
 })

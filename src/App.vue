@@ -3,7 +3,7 @@
     <button @click="login">fsdfdsfdsfde</button>
     <button @click="getUser">vcv</button>
     <button @click="logout">vcxzvcx</button>
-    <h1>{{ id }}</h1>
+    <h1>{{ user._id }}</h1>
   </div>
 </template>
 
@@ -39,13 +39,11 @@ export default {
 
     async getUser() {
       await this.updateUserInfo;
-      console.log(this.user);
     }
   },
   computed: {
     ...mapState({
-      user: state => state.user,
-      id: state => state.user._id
+      user: state => state.user.user_info,
     })
   }
 }

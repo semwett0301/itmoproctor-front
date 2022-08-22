@@ -8,7 +8,7 @@ export default {
 
     // Проверяет формат: 2019-03-26T14:32:24.435Z
     isFullDate: (date) => {
-        return date.match(/^\d{4}(-)\d{2}\1\d{2}\w\d{2}(:)\d{2}\2\d{2}\2(.)\d{3}\w$/)
+        return date.match(/^\d{4}(-)\d{2}\1\d{2}\w\d{2}(:)\d{2}\2\d{2(.)\d{3}\w$/)
     },
     isDocumentNumber: (number) => {
         return number.match(/^\d{4}\s\d{6}$/)

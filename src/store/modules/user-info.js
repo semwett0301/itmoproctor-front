@@ -33,33 +33,8 @@ const defaultUser = {
 
 export const user_info = {
     state: () => ({
-        user: {
-            active: false,
-            address: "",
-            attach: [],
-            birthday: "",
-            citizenship: "",
-            created: "",
-            description: "",
-            documentIssueDate: "",
-            documentNumber: "",
-            documentType: "",
-            email: "",
-            expert: false,
-            firstname: "",
-            gender: "",
-            lastname: "",
-            middlename: "",
-            organization: {
-                _id: "",
-                fullName: "",
-                shortName: "",
-                code: ""
-            },
-            provider: "",
-            role: -1,
-            username: "",
-            _id: ""
+        user_info: {
+            ...defaultUser
         }
     }),
 
@@ -67,7 +42,7 @@ export const user_info = {
         set_id(state, id) {
             if (typeof id === "string") {
                 if (id_validator(id)) {
-                    state.user._id = id;
+                    state.user_info._id = id;
                 } else {
                     throw "User id isn't correct"
                 }
@@ -77,29 +52,29 @@ export const user_info = {
         },
         setActive(state, active) {
             if (typeof active === "boolean") {
-                state.user.active = active;
+                state.user_info.active = active;
             } else {
                 throw new TypeError;
             }
         },
         setAddress(state, address) {
             if (typeof address === "string") {
-                state.user.address = address;
+                state.user_info.address = address;
             } else {
                 throw new TypeError;
             }
         },
         setAttach(state, attach) {
             if (Array.isArray(attach)) {
-                state.user.attach = attach;
+                state.user_info.attach = attach;
             } else {
                 throw new TypeError;
             }
         },
         setBirthday(state, birthday) {
             if (typeof birthday === "string") {
-                if (validator.disStandardDate(birthday)) {
-                    state.user.birthday = birthday;
+                if (validator.isStandardDate(birthday)) {
+                    state.user_info.birthday = birthday;
                 } else {
                     throw "Birthday date isn't correct"
                 }
@@ -109,7 +84,7 @@ export const user_info = {
         },
         setCitizenship(state, citizenship) {
             if (typeof citizenship === "string") {
-                state.user.citizenship = citizenship;
+                state.user_info.citizenship = citizenship;
             } else {
                 throw new TypeError;
             }
@@ -117,7 +92,7 @@ export const user_info = {
         setCreated(state, created) {
             if (typeof created === "string") {
                 if (validator.isFullDate(created)) {
-                    state.user.created = created;
+                    state.user_info.created = created;
                 } else {
                     throw "Date of creation isn't correct"
                 }
@@ -127,7 +102,7 @@ export const user_info = {
         },
         setDescription(state, description) {
             if (typeof description === "string") {
-                state.user.description = description;
+                state.user_info.description = description;
             } else {
                 throw new TypeError;
             }
@@ -135,7 +110,7 @@ export const user_info = {
         setDocumentIssueDate(state, documentIssueDate) {
             if (typeof documentIssueDate === "string") {
                 if (validator.isStandardDate(documentIssueDate)) {
-                    state.user.documentIssueDate = documentIssueDate;
+                    state.user_info.documentIssueDate = documentIssueDate;
                 } else {
                     throw "Date of document issue isn't correct"
                 }
@@ -146,7 +121,7 @@ export const user_info = {
         setDocumentNumber(state, documentNumber) {
             if (typeof documentNumber === "string") {
                 if (validator.isDocumentNumber(documentNumber)) {
-                    state.user.documentNumber = documentNumber;
+                    state.user_info.documentNumber = documentNumber;
                 } else {
                     throw "Document number isn't correct"
                 }
@@ -156,7 +131,7 @@ export const user_info = {
         },
         setDocumentType(state, documentType) {
             if (typeof documentType === "string") {
-                state.user.documentType = documentType;
+                state.user_info.documentType = documentType;
             } else {
                 throw new TypeError;
             }
@@ -164,7 +139,7 @@ export const user_info = {
         setEmail(state, email) {
             if (typeof email === "string") {
                 if (validator.isEmail(email)) {
-                    state.user.email = email;
+                    state.user_info.email = email;
                 } else {
                     throw "Email isn't correct"
                 }
@@ -173,11 +148,11 @@ export const user_info = {
             }
         },
         setExpert(state, expert) {
-            state.user.expert = Boolean(expert)
+            state.user_info.expert = Boolean(expert)
         },
-        setFirstName(state, name) {
+        setFirstname(state, name) {
             if (typeof name === "string") {
-                state.user.firstName = name;
+                state.user_info.firstName = name;
             } else {
                 throw new TypeError;
             }
@@ -185,7 +160,7 @@ export const user_info = {
         setGender(state, gender) {
             if (typeof gender === "string") {
                 if (validator.isGender(gender)) {
-                    state.user.gender = gender;
+                    state.user_info.gender = gender;
                 } else {
                     throw "Gender doesn't exist"
                 }
@@ -193,16 +168,16 @@ export const user_info = {
                 throw TypeError;
             }
         },
-        setLastName(state, name) {
+        setLastname(state, name) {
             if (typeof name === "string") {
-                state.user.lastName = name;
+                state.user_info.lastname = name;
             } else {
                 throw new TypeError;
             }
         },
-        setMiddleName(state, name) {
+        setMiddlename(state, name) {
             if (typeof name === "string") {
-                state.user.middleName = name;
+                state.user_info.middlename = name;
             } else {
                 throw new TypeError;
             }
@@ -210,7 +185,7 @@ export const user_info = {
         setProvider(state, provider) {
             if (typeof provider === "string" || provider === "") {
                 if (validator.isProvider(provider)) {
-                    state.user.provider = provider;
+                    state.user_info.provider = provider;
                 } else {
                     throw "Provider doesn't exist"
                 }
@@ -219,9 +194,9 @@ export const user_info = {
             }
         },
         setRole(state, role) {
-            if (typeof role === "string") {
+            if (typeof role === "number") {
                 if (validator.isRole(role) || role === -1) {
-                    state.user.role = role;
+                    state.user_info.role = role;
                 } else {
                     throw "Role doesn't exist"
                 }
@@ -231,7 +206,7 @@ export const user_info = {
         },
         setUsername(state, username) {
             if (typeof username === "string") {
-                state.user.username = username;
+                state.user_info.username = username;
             } else {
                 throw new TypeError;
             }
@@ -240,7 +215,7 @@ export const user_info = {
             if (typeof organization === "object") {
                 let validationResult = validator.isOrganization(organization);
                 if (validationResult["correct"]) {
-                    state.user.organization = organization;
+                    state.user_info.organization = organization;
                 } else {
                     let errorMessage = "Organization object isn't correct. These properties don't exist or aren't valid:\n";
                     validationResult["errors"].forEach(
@@ -259,31 +234,37 @@ export const user_info = {
 
     actions: {
         setDefaultUserInfo({state}) {
-            Object.assign(state.user, defaultUser)
+            Object.assign(state.user_info, defaultUser)
         },
 
         setUserInfo({state, commit}, newUserInfo) {
             Object.keys(newUserInfo).forEach(
                 elem => {
-                    if (elem in state.user) {
+                    if (elem in state.user_info) {
                         let commitName = "set";
                         commitName += (elem.charAt(0).toUpperCase() + elem.slice(1));
-                        console.log(commitName)
-                        commit(commitName, newUserInfo[elem])
+                        try {
+                            commit(commitName, newUserInfo[elem])
+                        } catch (e) {
+                            if (e === TypeError) {
+                                console.log(`Неправильный тип поля ${elem}`)
+                            } else {
+                                console.log(`Обработка поля ${elem} была прервана по причине:\n${e}`)
+                            }
+                        }
                     }
                 }
             )
-            console.log(state.user);
         },
 
         async updateUserInfo({dispatch, state}) {
-            const newUserInfo = await request.profile.getProfile(state.user._id);
+            const newUserInfo = await request.profile.getProfile(state.user_info._id);
 
             dispatch('setUserInfo', newUserInfo);
         },
 
         async sendUserInfo({state}) {
-            await request.profile.updateProfile(state.user._id, state.user)
+            await request.profile.updateProfile(state.user_info._id, state.user_info)
         }
     },
 

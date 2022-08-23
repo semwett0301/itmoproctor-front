@@ -21,8 +21,8 @@ const defaultUser = {
     middlename: "",
     organization: {
         _id: "",
-        fullName: "",
-        shortName: "",
+        // fullName: "",
+        // shortName: "",
         code: ""
     },
     provider: "",
@@ -233,10 +233,6 @@ export const user_info = {
     },
 
     actions: {
-        setDefaultUserInfo({state}) {
-            Object.assign(state.user_info, defaultUser)
-        },
-
         setUserInfo({state, commit}, newUserInfo) {
             Object.keys(newUserInfo).forEach(
                 elem => {
@@ -257,15 +253,17 @@ export const user_info = {
             )
         },
 
-        async updateUserInfo({dispatch, state}) {
-            const newUserInfo = await request.profile.getProfile(state.user_info._id);
-
-            dispatch('setUserInfo', newUserInfo);
+        async updateUserInfo({dispatch}) {
+            await request.profile.getProfileBySession()
+                .then(r => {
+                    dispatch('setUserInfo', r.data);
+                })
         },
 
-        async sendUserInfo({state}) {
-            await request.profile.updateProfile(state.user_info._id, state.user_info)
+        dropUserInfo({state}) {
+            Object.assign(state.user_info, defaultUser);
         }
+
     },
 
     namespaced: true

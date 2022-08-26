@@ -258,6 +258,9 @@ export const user_info = {
                 .then(r => {
                     dispatch('setUserInfo', r.data);
                 })
+                .catch(() => {
+                    console.log("Данные не были обновлены")
+                })
         },
 
         dropUserInfo({state}) {

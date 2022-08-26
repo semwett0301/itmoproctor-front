@@ -3,6 +3,7 @@
     <InputText placeholder="username" v-model="username"/>
     <InputText placeholder="password" v-model="password" type="password"/>
     <Button label="Залупа" @click="login"/>
+    <Button label="Пупа" @click="logout"/>
     <h1>{{id}}</h1>
   </div>
 </template>
@@ -36,6 +37,9 @@ export default {
         console.log(e)
       })
     },
+    async logout() {
+      await request.auth.logout(this.id)
+    }
   },
   computed: {
     ...mapState({

@@ -1,4 +1,5 @@
 import id_validator from "./id-validator"
+import auth_config from "@/config/auth-config"
 
 export default {
     // Проверяет формат: 19.01.2001
@@ -20,13 +21,14 @@ export default {
         return gender === "male" || gender === "female"
     },
     isProvider: (provider) => {
-        let providers = ["local", "openedu"];
-
-        return providers.includes(provider);
+        return auth_config.providers.includes(provider);
     },
     isRole: (role) => {
-        let roles = [1, 2, 3, 10];
-        return roles.includes(role);
+        const roles = Object.keys(auth_config.roles)
+        for (let i = 0; i <roles.length; i++) {
+            if (roles[i] === role.toString()) return true;
+        }
+        return false;
     },
     isOrganization: (organization) => {
         let result = {

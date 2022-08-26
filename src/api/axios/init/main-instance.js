@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "/config/axios-config";
+import config from "@/config/axios-config";
 import errors from "@/api/axios/init/errors";
 const mainInstance = axios.create({
     baseURL: config.baseUrl,
@@ -9,7 +9,6 @@ const mainInstance = axios.create({
 
 mainInstance.interceptors.response.use((response) => response, (error => {
     errors[error.response.status].callback()
-    throw error
 }))
 
 export default mainInstance;

@@ -1,5 +1,5 @@
 export default {
-    baseUrl: "https://de-dev.itmo.ru/",
+    baseUrl: "http://localhost:3000",
     baseHeaders: {
         "Content-Type": "application/json",
     },

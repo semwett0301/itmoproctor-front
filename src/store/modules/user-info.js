@@ -28,14 +28,12 @@ const defaultUser = {
     provider: "",
     role: -1,
     username: "",
-    _id: ""
+    _id: "",
 }
 
 export const user_info = {
     state: () => ({
-        user_info: {
-            ...defaultUser
-        }
+        user_info: {}
     }),
 
     mutations: {
@@ -229,7 +227,7 @@ export const user_info = {
             } else {
                 throw TypeError
             }
-        }
+        },
     },
 
     actions: {
@@ -253,13 +251,14 @@ export const user_info = {
             )
         },
 
-        async updateUserInfo({dispatch}) {
+        async updateUserInfo({state, dispatch}) {
             await request.profile.getProfileBySession()
                 .then(r => {
                     dispatch('setUserInfo', r.data);
                 })
                 .catch(() => {
                     console.log("Данные не были обновлены")
+                    Object.assign(state.user_info, defaultUser);
                 })
         },
 

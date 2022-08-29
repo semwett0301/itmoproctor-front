@@ -3,13 +3,12 @@
     <InputText placeholder="username" v-model="username"/>
     <InputText placeholder="password" v-model="password" type="password"/>
     <Button label="Залупа" @click="login"/>
-    <Button label="Пупа" @click="logout"/>
     <h1>{{id}}</h1>
   </div>
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex";
+import {mapActions} from "vuex";
 import request from "@/api/axios/request";
 
 export default {
@@ -36,16 +35,8 @@ export default {
       }).catch(e => {
         console.log(e)
       })
-    },
-    async logout() {
-      await request.auth.logout(this.id)
     }
   },
-  computed: {
-    ...mapState({
-      id: state => state.user.user_info._id,
-    })
-  }
 }
 </script>
 

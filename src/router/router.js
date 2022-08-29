@@ -50,61 +50,28 @@ router.beforeEach(async (to, from, next) => {
     if (to.name === "dist") {
         next();
     }
-
-    await store.dispatch("user/updateUserInfo")
-
     const user = store.state.user.user_info
 
-    if (auth_config.roles[user.role.toString()] !== undefined) {
-        Object.keys(auth_config.roles).forEach(
-            role => {
-                if (user.role.toString() === role) {
-                    if (to.name !== auth_config.roles[role]) {
-                        next(auth_config.roles[role])
-                    } else {
-                        next()
-                    }
-                }
-            }
-        )
+    const roleNames = Object.values(auth_config.roles);
+    if (Object.keys(user).length === 0) {
+        await store.dispatch("user/updateUserInfo")
+        console.log(user)
+    }
+
+    const userRole = String(user.role)
+    const userRoleName = auth_config.roles[userRole];
+    console.log(userRoleName)
+    if (roleNames.indexOf(userRoleName) !== -1) {
+        if (to.name.indexOf(userRoleName) !== -1) {
+            next();
+        } else {
+            next({
+                name: auth_config.roles[userRole]
+            })
+        }
     } else {
         next("dist")
     }
-
-    // switch (user.role) {
-    //     case auth_config.roles.unauthorized:
-    //         if (to.name !== "login") {
-    //             next("login")
-    //         } else {
-    //             next()
-    //         }
-    //         break;
-    //
-    //     case auth_config.roles.student:
-    //         if (!to.name.toString().startsWith("student")) {
-    //             next("student");
-    //         } else {
-    //             next()
-    //         }
-    //         break;
-    //     case auth_config.roles.proctor:
-    //         if (!to.name.toString().startsWith("proctor")) {
-    //             next("proctor");
-    //         } else {
-    //             next()
-    //         }
-    //         break;
-    //
-    //     case (auth_config.roles.admin || auth_config.roles.system_admin):
-    //         if (!to.name.toString().startsWith("admin")) {
-    //             next("admin");
-    //         }
-    //         break;
-    //
-    //     default:
-    //         next("dist")
-    //         break;
-    // }
 })
 
 export default router

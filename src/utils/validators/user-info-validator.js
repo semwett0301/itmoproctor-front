@@ -24,11 +24,7 @@ export default {
         return auth_config.providers.includes(provider);
     },
     isRole: (role) => {
-        const roles = Object.keys(auth_config.roles)
-        for (let i = 0; i <roles.length; i++) {
-            if (roles[i] === role.toString()) return true;
-        }
-        return false;
+        return auth_config.roles[role] !== undefined
     },
     isOrganization: (organization) => {
         let result = {

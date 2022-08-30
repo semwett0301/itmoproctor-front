@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <InputText placeholder="username" v-model="username"/>
-    <InputText placeholder="password" v-model="password" type="password"/>
-    <Button label="Залупа" @click="login"/>
-    <h1>{{id}}</h1>
+  <div class="auth-container">
+    <InputText placeholder="Имя пользователя" v-model="username"/>
+    <InputText placeholder="Пароль" v-model="password" type="password"/>
+    <Button label="Вход" @click="login"/>
   </div>
 </template>
 
@@ -35,11 +34,28 @@ export default {
       }).catch(e => {
         console.log(e)
       })
+
+      this.$router.push("/")
     }
   },
 }
 </script>
 
 <style scoped>
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
+.auth-container * {
+  margin-top: 10px;
+  width: 50%
+}
+
+.auth-container input {
+  text-align: center;
+  vertical-align: center;
+}
 </style>

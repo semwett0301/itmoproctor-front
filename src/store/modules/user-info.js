@@ -26,7 +26,7 @@ const defaultUser = {
         code: ""
     },
     provider: "",
-    role: -1,
+    role: 0,
     username: "",
     _id: "",
 }
@@ -196,7 +196,7 @@ export const user_info = {
         },
         setRole(state, role) {
             if (typeof role === "number") {
-                if (validator.isRole(role) || role === -1) {
+                if (validator.isRole(role)) {
                     state.user_info.role = role;
                 } else {
                     throw "Role doesn't exist"

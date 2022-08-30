@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view/>
-    <Button label="Выход" @click="logout"/>
+    <Button class="logout" label="Выход" @click="logout"/>
   </div>
 </template>
 
@@ -15,6 +15,10 @@ export default {
   methods: {
     async logout() {
       await request.auth.logout(this.id)
+      this.$store.dispatch('user/dropUserInfo')
+      this.$router.push({
+        path: "/login"
+      })
     }
   },
   computed: {
@@ -26,5 +30,7 @@ export default {
 </script>
 
 <style>
-
+  .logout {
+    margin-top: 20px
+  }
 </style>

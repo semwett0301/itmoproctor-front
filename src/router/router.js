@@ -2,7 +2,6 @@ import {createRouter, createWebHistory} from "vue-router";
 import Authorization from "@/components/unauthorized/authorization/Authorization";
 import store from "@/store/index"
 import auth_config from "@/config/auth-config"
-import NotFound from "@/components/unauthorized/errors/NotFound";
 import Installing from "@/components/unauthorized/installing/Installing";
 import Student from "@/components/student/Student";
 import Proctor from "@/components/proctor/Proctor";
@@ -42,7 +41,6 @@ const routes = [
     {
         path: "/:pathMatch(.*)*",
         name: "not-found",
-        component: NotFound,
     }
 ]
 
@@ -63,10 +61,10 @@ router.beforeEach(async (to, from, next) => {
     }
 
     const roleNames = Object.values(auth_config.roles);
-    const userRole = String(user.role)
+    const userRole = user.role
     const userRoleName = auth_config.roles[userRole];
     if (roleNames.indexOf(userRoleName) !== -1) {
-        if (to.name.indexOf(userRoleName) !== -1) {
+        if (to.name !== undefined && to.name.indexOf(userRoleName) !== -1) {
             next();
         } else {
             next({

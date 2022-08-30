@@ -33,7 +33,10 @@ const defaultUser = {
 
 export const user_info = {
     state: () => ({
-        user_info: {}
+        user_info: {
+            ...defaultUser,
+            isDefault: true
+        }
     }),
 
     mutations: {
@@ -228,6 +231,13 @@ export const user_info = {
                 throw TypeError
             }
         },
+        setIsDefault(state, isDefault) {
+            if (typeof isDefault === "boolean") {
+                state.user_info.isDefault = isDefault
+            } else {
+                throw TypeError
+            }
+        }
     },
 
     actions: {
@@ -249,21 +259,23 @@ export const user_info = {
                     }
                 }
             )
+            commit('setIsDefault', false)
         },
 
-        async updateUserInfo({state, dispatch}) {
+        async updateUserInfo({dispatch}) {
             await request.profile.getProfileBySession()
                 .then(r => {
                     dispatch('setUserInfo', r.data);
                 })
                 .catch(() => {
                     console.log("Данные не были обновлены")
-                    Object.assign(state.user_info, defaultUser);
+                    dispatch('dropUserInfo')
                 })
         },
 
-        dropUserInfo({state}) {
+        dropUserInfo({commit, state}) {
             Object.assign(state.user_info, defaultUser);
+            commit('setIsDefault', false)
         }
 
     },

@@ -7,6 +7,8 @@ import Installing from "@/components/unauthorized/installing/Installing";
 import Student from "@/components/student/Student";
 import Proctor from "@/components/proctor/Proctor";
 import Admin from "@/components/admin/Admin";
+import studentModule from "@/router/modules/student-module";
+import moduleModifier from "@/utils/modifiers/router-module-modifier"
 
 const routes = [
     {
@@ -22,7 +24,10 @@ const routes = [
     {
         path: "/student",
         name: "student",
-        component: Student
+        component: Student,
+        children: [
+            ...moduleModifier(studentModule, "student")
+        ]
     },
     {
         path: "/proctor",
@@ -48,19 +53,18 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
     if (to.name === "dist") {
-        next();
+        next()
     }
+
     const user = store.state.user.user_info
 
-    const roleNames = Object.values(auth_config.roles);
-    if (Object.keys(user).length === 0) {
+    if (user.isDefault) {
         await store.dispatch("user/updateUserInfo")
-        console.log(user)
     }
 
+    const roleNames = Object.values(auth_config.roles);
     const userRole = String(user.role)
     const userRoleName = auth_config.roles[userRole];
-    console.log(userRoleName)
     if (roleNames.indexOf(userRoleName) !== -1) {
         if (to.name.indexOf(userRoleName) !== -1) {
             next();
@@ -72,6 +76,7 @@ router.beforeEach(async (to, from, next) => {
     } else {
         next("dist")
     }
+
 })
 
 export default router

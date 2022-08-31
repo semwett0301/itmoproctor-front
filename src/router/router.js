@@ -7,7 +7,9 @@ import Student from "@/components/student/Student";
 import Proctor from "@/components/proctor/Proctor";
 import Admin from "@/components/admin/Admin";
 import studentModule from "@/router/modules/student-module";
+import adminModule from "@/router/modules/admin-module";
 import moduleModifier from "@/utils/modifiers/router-module-modifier"
+import request from "@/api/axios/request";
 
 const routes = [
     {
@@ -36,7 +38,10 @@ const routes = [
     {
         path: "/admin",
         name: "admin",
-        component: Admin
+        component: Admin,
+        children: [
+            ...moduleModifier(adminModule, "admin")
+        ]
     },
     {
         path: "/:pathMatch(.*)*",
@@ -57,7 +62,14 @@ router.beforeEach(async (to, from, next) => {
     const user = store.state.user.user_info
 
     if (user.isDefault) {
-        await store.dispatch("user/updateUserInfo")
+        await request.profile.getProfileBySession()
+            .then(r => {
+                store.dispatch('user/setUserInfo', r.data);
+            })
+            .catch(() => {
+                console.log("Данные не были обновлены")
+                store.commit("setIsDefault", false)
+            })
     }
 
     const roleNames = Object.values(auth_config.roles);

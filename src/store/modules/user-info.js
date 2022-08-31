@@ -1,6 +1,5 @@
 import validator from '@/utils/validators/user-info-validator'
 import id_validator from '@/utils/validators/id-validator'
-import request from "@/api/axios/request";
 
 const defaultUser = {
     active: false,
@@ -260,17 +259,6 @@ export const user_info = {
                 }
             )
             commit('setIsDefault', false)
-        },
-
-        async updateUserInfo({dispatch}) {
-            await request.profile.getProfileBySession()
-                .then(r => {
-                    dispatch('setUserInfo', r.data);
-                })
-                .catch(() => {
-                    console.log("Данные не были обновлены")
-                    dispatch('dropUserInfo')
-                })
         },
 
         dropUserInfo({commit, state}) {

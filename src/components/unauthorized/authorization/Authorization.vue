@@ -1,7 +1,13 @@
 <template>
   <div class="auth-container">
-    <InputText placeholder="Имя пользователя" v-model="username"/>
-    <InputText placeholder="Пароль" v-model="password" type="password"/>
+    <div class="input-container">
+      <InputText placeholder="Имя пользователя" v-model="username"/>
+      <i class="pi pi-user"></i>
+    </div>
+    <div class="input-container">
+      <InputText placeholder="Пароль" v-model="password" type="password"/>
+      <i class="pi pi-lock"></i>
+    </div>
     <Button label="Вход" @click="login"/>
   </div>
 </template>
@@ -22,7 +28,6 @@ export default {
   methods: {
     ...mapActions({
       setUserInfo: "user/setUserInfo",
-      updateUserInfo: "user/updateUserInfo"
     }),
 
     async login() {
@@ -51,11 +56,24 @@ export default {
 
 .auth-container * {
   margin-top: 10px;
-  width: 50%
+  width: 20em
 }
 
 .auth-container input {
   text-align: center;
   vertical-align: center;
+}
+
+.input-container i {
+  position: absolute;
+  left: 10px;
+  top: 25%;
+
+  width: auto;
+}
+
+.input-container {
+  position: relative;
+  width: 20em;
 }
 </style>

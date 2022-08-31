@@ -1,13 +1,11 @@
 <template>
-<h1>
-  Admin
-</h1>
+<router-view></router-view>
 </template>
 
 <script>
 export default {
 // eslint-disable-next-line vue/multi-word-component-names
-name: "admin"
+name: "admin",
 }
 </script>
 

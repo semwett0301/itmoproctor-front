@@ -14,6 +14,7 @@ const defaultUser = {
     documentType: "",
     email: "",
     expert: false,
+    system: false,
     firstname: "",
     gender: "",
     lastname: "",
@@ -149,6 +150,9 @@ export const user_info = {
         },
         setExpert(state, expert) {
             state.user_info.expert = Boolean(expert)
+        },
+        setSystem(state, system) {
+            state.user_info.system = Boolean(system)
         },
         setFirstname(state, name) {
             if (typeof name === "string") {

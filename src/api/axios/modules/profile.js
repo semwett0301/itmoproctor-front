@@ -1,6 +1,6 @@
 export default function (instance){
     return {
-        getProfileById(user_id) {
+        async getProfileById(user_id) {
             return instance.get(`profile/${user_id}`)
         },
 

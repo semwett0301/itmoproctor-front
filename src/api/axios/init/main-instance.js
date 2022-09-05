@@ -8,7 +8,7 @@ const mainInstance = axios.create({
 })
 
 mainInstance.interceptors.response.use((response) => response, (error => {
-    errors[error.response.status].callback()
+    return Promise.reject(errors[error.response.status]())
 }))
 
 export default mainInstance;
